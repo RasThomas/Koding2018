@@ -12,4 +12,4 @@ print("The areal of the circle is ", myConstPi *radius*radius)
 print("The conference of the circle is ", 2 *myConstPi *radius)
 #Casting
 print("The conference of the circle as an interger is ", int(2 *myConstPi *radius))
-s
+

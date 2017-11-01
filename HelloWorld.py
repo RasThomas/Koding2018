@@ -15,5 +15,6 @@ print(10 / 3)
 
 while test < 10:
     print("This is test number " +str(test2))
+    print("This is test number ", test+1)
     test+=1
     test2 = str(test+1)

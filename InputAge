@@ -1,0 +1,15 @@
+age=input("What is your age")
+
+print(age)
+print(type(age))
+
+futureYear=int(input("Type a year in the future"))
+
+birthYear=int(input("Type in the year you were born"))
+
+print("You will be ", futureYear-birthYear, "years old in ", futureYear)
+#Tests
+#1) Entered a sting - breaks
+#2) Enter a decmal - breaks
+#3) Enter an empty string - breaks
+#4) Enter space

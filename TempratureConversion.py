@@ -1,4 +1,4 @@
-
+import turtle
 
 # fahrInput = int(input("Type in temrature in Fahrenheit for conversion to Celsius. "))
 #
@@ -21,14 +21,27 @@ def celciusToFahrenheit():
     myInput = int(input("Enter a temperature in Celsius :"))
     tempInFahrenheit = (((myInput * 9) + 160)/5)
     print("The temperature of ",myInput, "in celsius is ",tempInFahrenheit," in Fahrenheit")
+    turtleSqare(tempInFahrenheit)
 
 def fahrenheitToCelsius():
     myInput = int(input("Enter a temperature in Fahrenheit :"))
     tempInCelsius = (((myInput - 32)/9) * 5)
     print("The temperature of ", myInput, "in fahrenheit is ", tempInCelsius," in Celsius")
+    turtleSqare(tempInCelsius)
 
 def isInt(test):
     isinstance(test, int)
+
+def turtleSqare(temp):
+    myTurtle = turtle.Turtle()
+    sides = 4
+    while(sides > 0):
+        myTurtle.forward(temp*10)
+        myTurtle.right(90)
+        sides = sides - 1
+    turtle.done()
+
+
 
 #Calling a function
 

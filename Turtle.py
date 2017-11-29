@@ -28,19 +28,24 @@ myTurtle2 = turtle.Turtle()
 
 
 
-triTurns = 3
-while(triTurns > 0):
-    myTurtle.left(120)
-    myTurtle.forward(60)
-    triTurns = triTurns -1
+# triTurns = 3
+# while(triTurns > 0):
+#     myTurtle.left(120)
+#     myTurtle.forward(60)
+#     triTurns = triTurns -1
 
 
-myTurtle2.right(90)
-myTurtle2.forward(50)
-myTurtle2.left(90)
-myTurtle2.forward(50)
-myTurtle2.left(135)
-myTurtle2.forward(math.sqrt(5000))
+
+# myTurtle2.right(90)
+# myTurtle2.forward(50)
+# myTurtle2.left(90)
+# myTurtle2.forward(50)
+# myTurtle2.left(135)
+# myTurtle2.forward(math.sqrt(5000))
+
+myTurtle.forward(50)
+myTurtle.right(50)
+myTurtle.fowarad(50)
 
 
 turtle.done()

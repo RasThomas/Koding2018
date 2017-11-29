@@ -1,6 +1,9 @@
 import turtle
+import math
 
 myTurtle = turtle.Turtle()
+myTurtle2 = turtle.Turtle()
+
 # turns = 2
 # while (turns > 0):
 #     myTurtle.forward(90)
@@ -23,9 +26,23 @@ myTurtle = turtle.Turtle()
 #     myTurtle.right(90)
 #     turns2 = turns2 -1
 
+
+
 triTurns = 3
 while(triTurns > 0):
     myTurtle.left(120)
     myTurtle.forward(60)
     triTurns = triTurns -1
+
+
+myTurtle2.right(90)
+myTurtle2.forward(50)
+myTurtle2.left(90)
+myTurtle2.forward(50)
+myTurtle2.left(135)
+myTurtle2.forward(math.sqrt(5000))
+
+
 turtle.done()
+
+

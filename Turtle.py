@@ -50,4 +50,8 @@ myTurtle.fowarad(50)
 
 turtle.done()
 
+#Draw  a star with 5 points (equal angles and lenghts)
+#Read about PenUp and PenDown
+# Draw four squeares inside eachother
+# Think about project
 

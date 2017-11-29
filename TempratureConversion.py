@@ -18,13 +18,22 @@ import turtle
 
 #Defining a function
 def celciusToFahrenheit():
-    myInput = int(input("Enter a temperature in Celsius :"))
-    tempInFahrenheit = (((myInput * 9) + 160)/5)
+    myInput = (input("Enter a temperature in Celsius :"))
+    # trueTemp = False
+    # while(trueTemp == False):
+    #     myInput = (input("Enter a temperature in Celsius :"))
+    #     print(isinstance(int(myInput), int))
+    #     if(isinstance(myInput, int)==True):
+    tempInFahrenheit = (((float(myInput) * 9) + 160)/5)
     print("The temperature of ",myInput, "in celsius is ",tempInFahrenheit," in Fahrenheit")
     turtleSqare(tempInFahrenheit)
+        #     trueTemp = True
+        # else:
+        #     print("Type in a correct value")
+
 
 def fahrenheitToCelsius():
-    myInput = int(input("Enter a temperature in Fahrenheit :"))
+    myInput = float(input("Enter a temperature in Fahrenheit :"))
     tempInCelsius = (((myInput - 32)/9) * 5)
     print("The temperature of ", myInput, "in fahrenheit is ", tempInCelsius," in Celsius")
     turtleSqare(tempInCelsius)

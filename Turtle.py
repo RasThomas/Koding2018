@@ -1,0 +1,31 @@
+import turtle
+
+myTurtle = turtle.Turtle()
+# turns = 2
+# while (turns > 0):
+#     myTurtle.forward(90)
+#     myTurtle.right(90)
+#     myTurtle.forward(120)
+#     myTurtle.right(90)
+#     turns = turns -1
+#
+# myTurtle.right(45)
+# myTurtle.hideturtle()
+# myTurtle.forward(5)
+# myTurtle.showturtle()
+# myTurtle.left(45)
+#
+# turns2 = 2
+# while (turns2 > 0):
+#     myTurtle.forward(80)
+#     myTurtle.right(90)
+#     myTurtle.forward(110)
+#     myTurtle.right(90)
+#     turns2 = turns2 -1
+
+triTurns = 3
+while(triTurns > 0):
+    myTurtle.left(120)
+    myTurtle.forward(60)
+    triTurns = triTurns -1
+turtle.done()

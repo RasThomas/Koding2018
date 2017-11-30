@@ -45,7 +45,7 @@ myTurtle2 = turtle.Turtle()
 
 myTurtle.forward(50)
 myTurtle.right(50)
-myTurtle.fowarad(50)
+myTurtle.forwrad(50)
 
 
 turtle.done()

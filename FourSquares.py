@@ -32,12 +32,17 @@ def invinsibleMove(hyp):
 squareNumber = 4
 length = size
 hyp = hypotenus(distance)
+myTurtle.penup()
+myTurtle.left(90)
+myTurtle.forward(size/2)
+myTurtle.left(90)
+myTurtle.forward(size/2)
+myTurtle.right(180)
+myTurtle.pendown()
 while(squareNumber > 0):
     sides = 4
-
     square(length)
     squareNumber = squareNumber -1
     length = length - 2 * distance
-
     invinsibleMove(hyp)
 turtle.done()

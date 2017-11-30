@@ -10,5 +10,4 @@ while(turns > 0 ):
     myTurtle.forward(float(size))
     turns = turns -1
 
-
 turtle.done()

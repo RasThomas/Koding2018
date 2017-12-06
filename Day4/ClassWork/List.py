@@ -16,13 +16,13 @@ print(myList[4])
 
 
 #defining the function
-def printMyList():
+def printMyList(listS):
     print("In the function")
-    for i in range (0, len(myList)):
-        print(myList[i], ".")
+    for i in range (0, len(listS)):
+        print(listS[i]),
 
 #Calling he fucntion
-printMyList()
+printMyList(myList)
 
 number = 13
 
@@ -34,7 +34,7 @@ def addNumber(number):
 
 addNumber(number)
 
-printMyList()
+printMyList(myList)
 
 #sum of myList
 def sumList():
@@ -58,18 +58,23 @@ usingTurtleWithLists()
 
 bochList = [1]
 
+#generates Fibonacci(?) numbers
 def makeList(lengthList):
     prevNumber = 1
+    prevNumber2 = 1
     currentNumber = 1
-    print("Making an ", lengthList, " number long Bochelli list.")
-    for i in range (0, lengthList):
+    print("Making an ", lengthList+1, " number long Fibonacci list.")
+    for i in range (0, int(lengthList)):
 
-        currentNumber = prevNumber + bochList[i-1]
+        currentNumber = prevNumber + prevNumber2
         bochList.append(currentNumber)
-        prevnumber = currentNumber
+        prevNumber2 = prevNumber
+        prevNumber = currentNumber
 
-listLength = input("Number for length of list")
+listLength = int(input("Number for length of list"))-1
 
 makeList(listLength)
+
+printMyList(bochList)
 
 turtle.done()

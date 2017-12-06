@@ -1,4 +1,8 @@
+import turtle
 
+myTurtle = turtle.Turtle()
+myTurtle.shape("turtle")
+mySecondTurtle = turtle.Turtle()
 
 myList = [1,2,3,5,8]
 
@@ -9,8 +13,7 @@ print(myList[0])
 print(myList[4])
 
 #print(myList[5])
-def makeList(lengthList):
-    print("Making an ", lengthList, " number long Bochelli list.")
+
 
 #defining the function
 def printMyList():
@@ -28,6 +31,7 @@ def addNumber(number):
     print("Adding ", number," to myList.")
     myList.append(number)
 
+
 addNumber(number)
 
 printMyList()
@@ -42,3 +46,30 @@ def sumList():
 
 sumList()
 
+def usingTurtleWithLists():
+    for i in range(0, len(myList)):
+        myTurtle.forward(i*10)
+        myTurtle.right(90)
+
+usingTurtleWithLists()
+
+usingTurtleWithLists()
+
+
+bochList = [1]
+
+def makeList(lengthList):
+    prevNumber = 1
+    currentNumber = 1
+    print("Making an ", lengthList, " number long Bochelli list.")
+    for i in range (0, lengthList):
+
+        currentNumber = prevNumber + bochList[i-1]
+        bochList.append(currentNumber)
+        prevnumber = currentNumber
+
+listLength = input("Number for length of list")
+
+makeList(listLength)
+
+turtle.done()

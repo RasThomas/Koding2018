@@ -5,7 +5,7 @@ userBase = [['John',['password', '123','swordfish']],['Jack',['apple', 'peach','
 
 
 def userChecks():
-    userName = input("Type in username: ")
+    userName = input("Type in username:  ")
 
 
 

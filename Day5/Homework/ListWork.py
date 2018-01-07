@@ -1,6 +1,6 @@
 
-
 testList = [1,2,3,5,6,4]
+
 #pick out largest number
 largestNumber = testList[0]
 
@@ -9,6 +9,7 @@ for i in range(0, len(testList)):
         largestNumber = testList[i]
 
 print(largestNumber)
+
 #sum of the numbers in the list
 totalList = 0
 
@@ -25,11 +26,8 @@ for i in range(0, len(testList)):
 
 print(multiList)
 
-
-
-thirdList = []
 #printing every third item in list
-print(len(thirdList))
+thirdList = []
 
 for i in range(0, len(testList)):
     if((i+2) % 3 == 1):

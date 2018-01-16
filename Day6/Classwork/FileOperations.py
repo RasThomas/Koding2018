@@ -45,14 +45,16 @@ def checkPassword(userName):
         userCred = user.split(';')
         print(userCred[0])
         if(userCred[0] == userName):
+            print("User found.")
             print("Type password for", userName)
             userPass = input()
             if(userPass == userCred[1]):
                 print("Password is correct")
                 break
             else:
-                print("Password is inccorect")
+                print("Password is incorrect")
+        else:
+            print("User not found.")
 
-    print("tests")
 
 checkPassword("Dinesh")

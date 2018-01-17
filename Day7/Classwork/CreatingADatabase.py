@@ -1,4 +1,4 @@
-
+#sqlite brower org
 
 import sqlite3
 
@@ -14,3 +14,4 @@ def crateTable(createSQL):
 createSql = """CREATE TABLE `Customer` ( `CustomerId` INTEGER, `Name` TEXT, `DateOfBirth` TEXT, `Adress` TEXT, `PhoneNumber` INTEGER, PRIMARY KEY(`CustomerId`) )"""
 
 crateTable(createSql)
+

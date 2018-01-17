@@ -32,13 +32,12 @@ newList = readMyDataFile("moreData.txt")
 
 longestWord(newList)
 
-#write function to count the number of occurances of a word in a file
+#write function to count the number of occurances of a word in a file (List up occurances of each word?, new list with 2 part lsit with word and count?)
 def countWord(word, fileName):
     wordList = []
     with open(fileName, mode = 'r') as myDateFile:
-        item = myDateFile.read().split()
-        print(item)
-        wordList = item
+        wordList = myDateFile.read().split()
+        print(wordList)
     wordCount = 0
     for i in range (0, len(wordList)):
         if (word.upper() == wordList[i].upper()):
@@ -47,3 +46,5 @@ def countWord(word, fileName):
 
 
 countWord("og", "textFile.txt")
+
+#plane takes off at at 60 angle, after 25 km, what is height?

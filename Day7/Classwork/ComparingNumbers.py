@@ -43,7 +43,7 @@ def countWord(word, fileName):
     for i in range (0, len(wordList)):
         if (word.upper() == wordList[i].upper()): #to ignore the difference in words with upper and lower case
             wordCount= wordCount+1
-    print("The ",word, "was found ",wordCount, "times.")
+    print("The word",word, "was found ",wordCount, "times.")
 
 def countWOrds(fileName):
     wordList = []

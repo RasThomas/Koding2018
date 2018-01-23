@@ -50,28 +50,21 @@ def countWOrds(fileName):
     with open(fileName, mode = 'r') as myDateFile:
         wordList = myDateFile.read().split()
         print(wordList)
-    countedWords = [[wordList[0].upper(),1]]
+    countedWords = [[wordList[0].upper().replace(',', ''),1]]
     print(countedWords)
     for i in range (0, len(wordList)):
         found = False
-        print("One")
         for j in range (0, len(countedWords)):
-            print("Two")
-            print(countedWords[j][0])
             if (wordList[i].upper() == countedWords[j][0]):
-                print("Old")
-                print(countedWords[j][1])
                 counted = countedWords[j][1] +1
                 countedWords[j][1] = counted
-                print(counted)
+                print(countedWords[j][0], "been found ",counted, "times.")
                 found = True
                 break
         if(found != True):
-            print("New")
-            newWord = wordList[i].upper()
-            print(newWord)
+            newWord = wordList[i].upper().replace(',', '')
             countedWords.append([newWord, 1])
-            print(countedWords)
+            print("New word ", newWord)
 
 
     print(sorted(countedWords, key=operator.itemgetter(1), reverse=True))

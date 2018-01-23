@@ -1,4 +1,5 @@
 import math
+import operator
 
 testList=[1,2,5,0,-1, 21, 15, 7, 200, -9]
 
@@ -40,9 +41,43 @@ def countWord(word, fileName):
         print(wordList)
     wordCount = 0
     for i in range (0, len(wordList)):
-        if (word.upper() == wordList[i].upper()):
+        if (word.upper() == wordList[i].upper()): #to ignore the difference in words with upper and lower case
             wordCount= wordCount+1
     print("The ",word, "was found ",wordCount, "times.")
+
+def countWOrds(fileName):
+    wordList = []
+    with open(fileName, mode = 'r') as myDateFile:
+        wordList = myDateFile.read().split()
+        print(wordList)
+    countedWords = [[wordList[0].upper(),1]]
+    print(countedWords)
+    for i in range (0, len(wordList)):
+        found = False
+        print("One")
+        for j in range (0, len(countedWords)):
+            print("Two")
+            print(countedWords[j][0])
+            if (wordList[i].upper() == countedWords[j][0]):
+                print("Old")
+                print(countedWords[j][1])
+                counted = countedWords[j][1] +1
+                countedWords[j][1] = counted
+                print(counted)
+                found = True
+                break
+        if(found != True):
+            print("New")
+            newWord = wordList[i].upper()
+            print(newWord)
+            countedWords.append([newWord, 1])
+            print(countedWords)
+
+
+    print(sorted(countedWords, key=operator.itemgetter(1), reverse=True))
+
+countWOrds("textFile.txt")
+
 
 
 countWord("og", "textFile.txt")

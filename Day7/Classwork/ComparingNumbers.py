@@ -1,4 +1,4 @@
-
+import math
 
 testList=[1,2,5,0,-1, 21, 15, 7, 200, -9]
 
@@ -48,3 +48,10 @@ def countWord(word, fileName):
 countWord("og", "textFile.txt")
 
 #plane takes off at at 60 angle, after 25 km, what is height?
+def planeHeight(angle, distance):
+    length = distance * math.sin(math.radians(angle)) #convert from angle to radius
+    length = format(length,'.2f') # limit to 2 decimals
+    print("The plane have reached a height of",length,"km after flying 25 km at a 60 degree angle.")
+    return length
+
+planeHeight(60, 25)

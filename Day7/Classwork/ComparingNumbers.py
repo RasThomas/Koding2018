@@ -50,7 +50,7 @@ def countWOrds(fileName):
     with open(fileName, mode = 'r') as myDateFile:
         wordList = myDateFile.read().split()
         print(wordList)
-    countedWords = [[wordList[0].upper().replace(',', ''),1]]
+    countedWords = [[wordList[0].upper().replace(',', ''),0]]
     print(countedWords)
     for i in range (0, len(wordList)):
         found = False

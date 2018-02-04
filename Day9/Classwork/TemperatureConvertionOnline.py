@@ -1,15 +1,28 @@
 
+import os, os.path
+import random
+import string
+
 import cherrypy
 from cherrypy import expose
+
+
+headStart = """"""
+line = """<div> Temperature Convertions <div>"""
+top = """"""
+bottom = """"""
 
 class TemperatureConverter():
     #decorate the function
     @expose
     def index(self):
         return """<html>
-                  <head></head>
+                  <head>
+                    <title>Temperature Convertion</title>
+                     <link href="/static/css/style.css" rel="stylesheet">
+                  </head>
                   <body>
-                    <div> Temperature Convertion <div>
+                    """,line,"""
                     <br /> 
                     <form method="get" action="celsiusToFahrenheit">
                       <input type="text" value="0" name="temperature" />
@@ -37,7 +50,18 @@ class TemperatureConverter():
 
 
 if __name__ == '__main__':
-    cherrypy.quickstart(TemperatureConverter())
+    conf = {
+        '/': {
+            'tools.sessions.on': True,
+            'tools.staticdir.root': os.path.abspath(os.getcwd())
+        },
+        '/static': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': './public'
+        }
+    }
+    cherrypy.quickstart(TemperatureConverter(), '/', conf)
+
 
 #http://127.0.0.1:8080/celsiusToFahrenheit?temperature=100
 

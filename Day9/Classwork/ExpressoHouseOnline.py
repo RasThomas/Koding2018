@@ -3,9 +3,26 @@ import os, os.path
 import random
 import string
 
+import sqlite3
 import cherrypy
 from cherrypy import expose
 
+def databaseInsert(sqlStatement):
+    with sqlite3.connect("expressoHouse.db") as myDatabase:
+        cursor = myDatabase.cursor()
+        cursor.execute(sqlStatement)
+        myDatabase.commit()
+        pass
+
+def databaseExtract(sqlStatement):
+    with sqlite3.connect("expressoHouse.db") as myDatabase:
+        cursor = myDatabase.cursor()
+        cursor.execute(sqlStatement)
+        myDatabase.commit()
+        rows = list(cursor.fetchall())
+        print(rows)
+        return rows
+        pass
 
 head = """<head>
                     <title>ExpressoHouse</title>
@@ -35,6 +52,18 @@ class ExpressoHouse():
 
     @expose
     def addCustomerForm(self):
+        paymentSQL = """SELECT * FROM PaymentType"""
+        paymentType = databaseExtract(paymentSQL)
+        payment = ""
+        for i in range(0, len(paymentType)):
+            pay = paymentType[i][1]
+            payment = payment + "<option value='"+pay+"'>"+pay+"</option>"
+        membershipSQL = """SELECT * FROM Membership"""
+        membershipType = databaseExtract(membershipSQL)
+        membership = ""
+        for i in range(0, len(membershipType)):
+            member = membershipType[i][1]
+            membership = membership + "<option value='"+member+"'>"+member+"</option>"
         return """<html>
                 """,head,"""
                   <body>
@@ -46,8 +75,8 @@ class ExpressoHouse():
                         <input type="text" value="Customer Phone" name="Phone" /><br/>
                         <input type="text" value="Customer Username" name="Username" /><br/>
                         <input type="text" value="Customer Password" name="Password" /><br/>
-                        <input type="text" value="Payment Type" name="PaymentType" /><br/>
-                        <input type="text" value="Membership Class" name="MembershipClass" /><br/>
+                        <select name="PaymentType">"""+payment+"""</select><br/>   
+                        <select name="MembershipType">"""+membership+"""</select><br/>  
                       <button type="submit">Adding new customer!</button>
                     </form>
                     <br /> 

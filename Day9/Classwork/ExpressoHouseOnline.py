@@ -152,8 +152,6 @@ class ExpressoHouse():
 
     @expose()
     def showCustomer(self, Customerid):
-
-#        showCustomer = """SELECT c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Name="""+personName+"""
         showCustomer = """SELECT c.Customerid, c.Name, c.Adress, c.Phone, c.Username, c.password, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Customerid='"""+Customerid+"""'"""
         print(showCustomer)
         showCust = databaseExtract(showCustomer)
@@ -373,9 +371,9 @@ class ExpressoHouse():
                 </html>"""
     @expose()
     def showProducts(self):
-        allProductsSQL = """SELECT * FROM Product"""
+        allProductsSQL = """SELECT p.ProductID, p.Name, p.Price, p.Availability,p.Description,s.Name, s.Description, t.Name, t.Description FROM Product p JOIN ProductType t ON p.ProductTypeID=t.ProductTypeid JOIN ProductSize s ON p.SizeID=s.ProductSizeid"""
         allProducts = databaseExtract(allProductsSQL)
-        productList = ["Produckt ID", "Product Name", "Price", "Description","Availability", "Size", "Product Type"]
+        productList = ["Produckt ID", "Product Name", "Price", "Description","Availability", "Size", "Size Description","Product Type","Product Description"]
         table = ""
         for i in range(0, len(allProducts)):
             table = table+ "<tr>"
@@ -398,7 +396,9 @@ class ExpressoHouse():
                         <th>Availability</th>
                         <th>Description</th>
                         <th>Size</th>
+                        <th>Size Description</th>                        
                         <th>Product Type</th>
+                        <th>Product Description</th>
                       </tr>
                     """+table+"""
                     </table>                                        

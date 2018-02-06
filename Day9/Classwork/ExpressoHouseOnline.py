@@ -32,6 +32,9 @@ top = """"""
 bottom = """        <form method="get" action="index">
                       <button type="submit">Back to front menu!</button>
                     </form>"""
+productButton = """        <form method="get" action="products">
+                      <button type="submit">Back to product menu!</button>
+                    </form>"""
 
 class ExpressoHouse():
     #decorate the function
@@ -100,12 +103,13 @@ class ExpressoHouse():
                       <button type="submit">Adding new customer!</button>
                     </form>
                     <br /> 
-                  </body>
+                  </body>"""+bottom+"""
                 </html>"""
 
     @expose()
     def addCustomer(self,personName, adress, phone, username, password, paymentTypeid, membershipid):
-        customer = """INSERT INTO Customer (Name, Adress, Phone, Username, Password, PaymentTypeid, Membershipid) VALUES ("""+personName+""", "5006, Bergen", 238923892, "drew.barrymore", "123456",1,1)"""
+        name = personName
+        customer = """INSERT INTO Customer (Name, Adress, Phone, Username, Password, PaymentTypeid, Membershipid) VALUES (\""""+name+"""\",\""""+adress+"""\","""+phone+""", \""""+username+"""\",\""""+password+"""\",1,1)"""
         print(customer)
         databaseInsert(customer)
         pass
@@ -113,8 +117,8 @@ class ExpressoHouse():
 
     @expose()
     def showCustomers(self):
-#        showCustomer = """SELECT c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid"""
-        showCustomer = """SELECT c.Customerid, c.Name, c.Adress, c.Phone, c.Username from Customer c """
+        showCustomer = """SELECT c.Customerid, c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid"""
+ #       showCustomer = """SELECT c.Customerid, c.Name, c.Adress, c.Phone, c.Username from Customer c """
         print(showCustomer)
         showCust = databaseExtract(showCustomer)
         table = ""
@@ -143,14 +147,14 @@ class ExpressoHouse():
                       </tr>
                     """+table+"""
                     </table>                                        
-                  </body>"""+bottom+""""
+                  </body>"""+bottom+"""
                 </html>"""
 
     @expose()
     def showCustomer(self, Customerid):
 
 #        showCustomer = """SELECT c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Name="""+personName+"""
-        showCustomer = """SELECT * from Customer c WHERE c.Customerid='"""+Customerid+"""'"""
+        showCustomer = """SELECT c.Customerid, c.Name, c.Adress, c.Phone, c.Username, c.password, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Customerid='"""+Customerid+"""'"""
         print(showCustomer)
         showCust = databaseExtract(showCustomer)
         table = ""
@@ -196,7 +200,7 @@ class ExpressoHouse():
                               <button type="submit">Delete customer!</button>
                             </form>
                             <br />                           
-                          </body>""" + bottom + """"
+                          </body>""" + bottom + """
                         </html>"""
     @expose()
     def updateCustomer(self, CustomerID):
@@ -204,7 +208,38 @@ class ExpressoHouse():
 
     @expose()
     def deleteCustomer(self,CustomerID):
-        return("Deleting customer")
+        deleteSQL = """SELECT * FROM Customer WHERE CustomerID = """+CustomerID+""""""
+        deletePerson = databaseExtract(deleteSQL)
+        personName = str(deletePerson[0][1])
+        personID = str(deletePerson[0][0])
+        return """<html>
+                """, head, """
+                  <body>
+                  <div>Are you sure you want to delete """+personName+""" from database?</div> 
+                    <form method="get" action="customerDelted">
+                        <input type="hidden" value="""+personID+""" name="Customerid" />
+                         <input type="hidden" value="""+personName+""" name="CustomerName" />
+                        <button type="submit">Yes, remove customer!</button>
+                    </form>
+                     <form method="get" action="showCustomer">
+                        <input type="hidden" value="""+personID+""" name="Customerid" />
+                        <button type="submit">No, keep record.</button>
+                    </form>
+                  </body>
+                </html>"""
+
+    @expose()
+    def customerDelted(self,Customerid, CustomerName):
+        customerID = Customerid
+        deleteSQL = """DELETE FROM Customer WHERE CustomerID = """+customerID+""""""
+        databaseInsert(deleteSQL)
+        return """<html>
+                """, head, """
+                  <body>
+                  <div>"""+CustomerName+""" was removed from database.</div> 
+                  </body>"""+bottom+"""
+                </html>"""
+
 
     @expose()
     def customerHistory(self,CustomerID):
@@ -235,6 +270,7 @@ class ExpressoHouse():
                         <legend>Search criteria:</legend>
                         <table>
                         <tr>
+                        <td>Customer ID</td><td><input type="text" value="" name="customerid" /></td></tr>
                         <td>Customer Name</td><td><input type="text" value="" name="personName" /></td></tr>
                         <tr><td>Customer Adress</td><td><input type="text" value="" name="adress" /></td></tr>
                         <tr><td>Customer Phone</td><td><input type="text" value="" name="phone" /></td></tr>
@@ -247,12 +283,12 @@ class ExpressoHouse():
                       </fieldset>
                     </form>
                     <br /> 
-                  </body>"""+bottom+""""
+                  </body>"""+bottom+"""
                 </html>"""
 
     @expose
-    def searchCustomer(self,personName, adress, phone, username, paymentType, membershipType):
-        if(personName=="" and adress =="" and phone == "" and username == "" and paymentType == "" and membershipType == ""):
+    def searchCustomer(self,customerid, personName, adress, phone, username, paymentType, membershipType):
+        if(customerid=="" and personName=="" and adress =="" and phone == "" and username == "" and paymentType == "" and membershipType == ""):
             return """<html>
                 """,head,"""
                   <body>
@@ -263,16 +299,25 @@ class ExpressoHouse():
                     <form method="get" action="searchCustomers">
                       <button type="submit">Back to customer search!</button>
                     </form> 
-                  </body>"""+bottom+""""
+                  </body>"""+bottom+"""
                 </html>"""
         else:
             select = ""
-            if(personName != ""):
-                select = select + """c.Name LIKE'%"""+personName+"""%'"""
+            whereList = ["c.Customerid", "c.Name", "c.Adress", "c.Phone,", "c.Username", "p.NameOfPayment", "m.MembershipName"]
+            customerList = [customerid, personName, adress, phone, username,paymentType, membershipType]
+            notFirst = False
+            for i in range(0, len(customerList)):
+                if(customerList[i] != ""):
+                    print(whereList[i])
+                    if(notFirst != False):
+                        select = select + " and "
+                    select = select + """"""+whereList[i]+""" LIKE'%"""+customerList[i]+"""%'"""
+                    notFirst = True
 #        showCustomer = """SELECT c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Name="""+personName+"""
-            showCustomer = """SELECT c.Customerid,c.Name, c.Adress, c.Phone, c.Username from Customer c WHERE """ + select + """"""
+            showCustomer = """SELECT c.Customerid,c.Name, c.Adress, c.Phone, c.Username, p.NameOfPayment, m.MembershipName from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE """ + select + """"""
             print(showCustomer)
             showCust = databaseExtract(showCustomer)
+
             table = ""
             for i in range(0, len(showCust)):
                 table = table + "<tr>"
@@ -299,7 +344,7 @@ class ExpressoHouse():
                           </tr>
                         """ + table + """
                         </table>                                        
-                      </body>""" + bottom + """"
+                      </body>""" + bottom + """
                     </html>"""
 
 
@@ -324,11 +369,53 @@ class ExpressoHouse():
                     </form>
                     <br /> 
                     <br /> 
-                  </body>"""+bottom+""""
+                  </body>"""+bottom+"""
                 </html>"""
     @expose()
     def showProducts(self):
-        return("Show all the products")
+        allProductsSQL = """SELECT * FROM Product"""
+        allProducts = databaseExtract(allProductsSQL)
+        productList = ["Produckt ID", "Product Name", "Price", "Description","Availability", "Size", "Product Type"]
+        table = ""
+        for i in range(0, len(allProducts)):
+            table = table+ "<tr>"
+            for j in range(0, 1):
+                tableContent = str(allProducts[i][j])
+                table = table + """<th><a href="./showProduct?ProductID="""+tableContent+"""">"""+tableContent+"""</a></p></th>"""
+            for j in range(1, len(allProducts[i])):
+                tableContent = str(allProducts[i][j])
+                table = table + "<th>" + tableContent + "</th>"
+            table = table + "</tr>"
+        return """<html>
+                """, head, """
+                  <body>
+                    <br /> 
+                     <table style="width:100%">
+                      <tr>
+                        <th>Product ID</th>                      
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Product Type</th>
+                      </tr>
+                    """+table+"""
+                    </table>                                        
+                  </body>"""+productButton+bottom+"""
+                </html>"""
+
+    @expose()
+    def showProduct(self, ProductID):
+        return("Showing a product.")
+
+    @expose()
+    def updateProduct(self):
+        return("Update a product.")
+
+    @expose()
+    def deleteProduct(self):
+        return("Removing a product.")
 
     @expose()
     def addProduct(self):

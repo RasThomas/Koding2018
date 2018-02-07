@@ -1,4 +1,5 @@
 
+import datetime
 import os, os.path
 import random
 import string
@@ -12,6 +13,8 @@ def databaseInsert(sqlStatement):
         cursor = myDatabase.cursor()
         cursor.execute(sqlStatement)
         myDatabase.commit()
+        newId = cursor.lastrowid
+        return newId
         pass
 
 def databaseExtract(sqlStatement):
@@ -32,7 +35,7 @@ top = """"""
 bottom = """        <form method="get" action="index">
                       <button type="submit">Back to front menu!</button>
                     </form>"""
-productButton = """        <form method="get" action="products">
+productButton = """  <form method="get" action="products">
                       <button type="submit">Back to product menu!</button>
                     </form>"""
 
@@ -71,7 +74,73 @@ class ExpressoHouse():
 
     @expose()
     def addOrder(self):
-        return("Creating a order")
+        return """<html>
+                """, head, """
+                  <body>
+                    <div>Welcome to Expresso House</div>
+                    <br /> 
+                    <form method="get" action="addNewOrder">
+                        <input type="hidden" value="" name="OrderID" />
+                        <td>ID to customer</td><td><input type="text" value="" name="CustomerID" /></td>
+                      <button type="submit">Adding new Order!</button>
+                    </form>
+                    <br /> 
+                    <form method="get" action="searchCustomer">
+                      <button type="submit">Find customer!</button>
+                    </form>
+                    <br /> 
+                  </body>""" + bottom + """
+                </html>"""
+
+    @expose()
+    def addNewOrder(self, OrderID, CustomerID):
+        customerSQL = """SELECT Name, Username From Customer WHERE Customerid="""+CustomerID+""""""
+        customerInfo = databaseExtract(customerSQL)
+        date=datetime.datetime.now().strftime("%y-%m-%d-%H-%M")
+        if(OrderID == ""):
+            orderSQL = """INSERT INTO CustomerOrder(Customerid, Date) VALUES ("""+CustomerID+""","""+date+""")"""
+            orderID = databaseInsert(orderSQL)
+            orderData = databaseExtract("SELECT * FROM CustomerOrder WHERE CustomerOrderid="""+str(orderID)+"""""")
+        else:
+            orderSQL = """SELECT * FROM CustomerOrder WHERE CustomerOrderid="""+OrderID+""""""
+            print(orderSQL)
+            orderData = databaseExtract(orderSQL)
+            print(orderData)
+        itemSQL = """SELECT * FROM OrderItem WHERE CustomerOrderid="""+str(OrderID)+""""""
+        print(itemSQL)
+        orderItems = databaseExtract(itemSQL)
+        productList = ["Product", "Quantity", "Size", "Update", "Remove items"]
+        itemNames = ["Order ID", "Customer ID", "Product ID", "Quantity"]
+        item = ""
+        for i in range (0,len(orderItems)):
+            for j in range(0, len(orderItems[i])):
+                item=item + """<td>"""+itemNames[j]+"""</td><td><input type="text" value="""+str(orderItems[i][j])+""" name="customerid" /></td>"""
+            item = item + "</tr>"
+        return """<html>
+                """, head, """
+                  <body>
+                        <table>
+                      
+                        <td>Order ID</td><td>"""+str(orderData[0][0])+"""</td></tr>
+                        <td>Customer ID</td><td>"""+str(orderData[0][1])+""" </td></tr>
+                        <td>Date</td><td>"""+str(orderData[0][2])+""" </td>/</tr>
+
+                        </table>                    
+                      <fieldset>
+                        <legend>Order items:</legend>
+                        <form method="get" action="sumOrder">
+                        <table>
+                        """+item+"""
+
+                        </table>  
+                      <button type="submit">Summarize purchase!</button>
+                      </fieldset>
+                  </body>
+                </html>"""
+
+    @expose
+    def sumOrder(self, customerid):
+        return "Summerize purchase and confirm/abort/go back."
 
     @expose
     def addCustomerForm(self):
@@ -183,6 +252,12 @@ class ExpressoHouse():
                              <br /> 
                             </table> 
                              <br />
+                             <form method="get" action="addNewOrder">
+                                <input type="hidden" value="" name="OrderID" />
+                                <input type="hidden" value="""+userID+""" name="CustomerID" />
+                                <button type="submit">Adding new Order!</button>
+                            </form>
+                            <br /> 
                             <form method="get" action="customerHistory">
                                 <input type="hidden" value="""+userID+""" name="CustomerID" />
                               <button type="submit">Orders made by customer!</button>
@@ -403,6 +478,11 @@ class ExpressoHouse():
                         <form method="get" action="searchCustomers">
                       <button type="submit">Search customers!</button>
                     </form>
+                    <form method="get" action="addNewOrder">
+                        <td>ID to customer</td><td><<input type="text" value="" name="customerid" /></td>
+                      <button type="submit">Adding new Order!</button>
+                    </form>
+                    <br /> 
                     <br />                                        
                       </body>""" + bottom + """
                     </html>"""

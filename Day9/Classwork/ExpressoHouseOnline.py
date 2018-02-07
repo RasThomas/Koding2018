@@ -1,5 +1,6 @@
 
 import datetime
+import time
 import os, os.path
 import random
 import string
@@ -96,9 +97,10 @@ class ExpressoHouse():
     def addNewOrder(self, OrderID, CustomerID):
         customerSQL = """SELECT Name, Username From Customer WHERE Customerid="""+CustomerID+""""""
         customerInfo = databaseExtract(customerSQL)
-        date=datetime.datetime.now().strftime("%y-%m-%d-%H-%M")
+        date=time.strftime("%Y-%m-%d %H:%M")
         if(OrderID == ""):
-            orderSQL = """INSERT INTO CustomerOrder(Customerid, Date) VALUES ("""+CustomerID+""","""+date+""")"""
+            orderSQL = """INSERT INTO CustomerOrder(Customerid, Date) VALUES ("""+CustomerID+""","""+str(date)+""")"""
+            print(orderSQL)
             orderID = databaseInsert(orderSQL)
             orderData = databaseExtract("SELECT * FROM CustomerOrder WHERE CustomerOrderid="""+str(orderID)+"""""")
         else:
@@ -106,7 +108,7 @@ class ExpressoHouse():
             print(orderSQL)
             orderData = databaseExtract(orderSQL)
             print(orderData)
-        itemSQL = """SELECT * FROM OrderItem WHERE CustomerOrderid="""+str(OrderID)+""""""
+        itemSQL = """SELECT * FROM OrderItem WHERE CustomerOrderid="""+str(orderID)+""""""
         print(itemSQL)
         orderItems = databaseExtract(itemSQL)
         productList = ["Product", "Quantity", "Size", "Update", "Remove items"]
@@ -287,7 +289,7 @@ class ExpressoHouse():
         print(customerData)
         for i in range(1, len(customerData[0])-4):
             print(str(customerData[0][i]))
-            table = table + "<tr><td>"+str(customerColum[i])+"</td><td><input type=\"text\" value="+str(customerData[0][i])+" name="+str(customerIDs[i])+" /></td></tr>"
+            table = table + "<tr><td>"+str(customerColum[i])+"</td><td><input type=\"text\" value=\""+str(customerData[0][i])+"\" name="+str(customerIDs[i])+" /></td></tr>"
 
         paymentSQL = """SELECT * FROM PaymentType"""
         paymentType = databaseExtract(paymentSQL)
@@ -476,10 +478,11 @@ class ExpressoHouse():
                         """ + table + """
                         </table> 
                         <form method="get" action="searchCustomers">
-                      <button type="submit">Search customers!</button>
-                    </form>
+                            <button type="submit">Search customers!</button>
+                        </form>
                     <form method="get" action="addNewOrder">
-                        <td>ID to customer</td><td><<input type="text" value="" name="customerid" /></td>
+                        <input type="hidden" value="""+customerid+""" name="CustomerID" />
+                        <input type="hidden" value="" name="OrderID" />
                       <button type="submit">Adding new Order!</button>
                     </form>
                     <br /> 

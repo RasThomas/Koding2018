@@ -80,13 +80,13 @@ class ExpressoHouse():
         payment = ""
         for i in range(0, len(paymentType)):
             pay = paymentType[i][1]
-            payment = payment + "<option value='"+pay+"'>"+pay+"</option>"
+            payment = payment + "<option value='"+str(paymentType[i][0])+"'>"+pay+"</option>"
         membershipSQL = """SELECT * FROM Membership"""
         membershipType = databaseExtract(membershipSQL)
         membership = ""
         for i in range(0, len(membershipType)):
             member = membershipType[i][1]
-            membership = membership + "<option value='"+member+"'>"+member+"</option>"
+            membership = membership + "<option value='"+str(membershipType[i][0])+"'>"+member+"</option>"
         return """<html>
                 """,head,"""
                   <body>
@@ -108,8 +108,8 @@ class ExpressoHouse():
 
     @expose()
     def addCustomer(self,personName, adress, phone, username, password, paymentTypeid, membershipid):
-        name = personName
-        customer = """INSERT INTO Customer (Name, Adress, Phone, Username, Password, PaymentTypeid, Membershipid) VALUES (\""""+name+"""\",\""""+adress+"""\","""+phone+""", \""""+username+"""\",\""""+password+"""\",1,1)"""
+
+        customer = """INSERT INTO Customer (Name, Adress, Phone, Username, Password, PaymentTypeid, Membershipid) VALUES (\""""+personName+"""\",\""""+adress+"""\","""+phone+""", \""""+username+"""\",\""""+password+"""\","""+paymentTypeid+""","""+paymentTypeid+""")"""
         print(customer)
         databaseInsert(customer)
         pass
@@ -200,9 +200,67 @@ class ExpressoHouse():
                             <br />                           
                           </body>""" + bottom + """
                         </html>"""
+
     @expose()
     def updateCustomer(self, CustomerID):
-        return("Update customer information.")
+        customerSQL = """SELECT c.Customerid,c.Name, c.Adress, c.Phone, c.Username, c.Password, p.NameOfPayment, m.MembershipName, c.PaymentTypeID, c.MembershipID from Customer c JOIN Membership m ON c.MembershipID = m.Membershipid JOIN PaymentType p ON c.PaymentTypeID=p.PaymentTypeid WHERE c.Customerid="""+CustomerID+""""""
+        customerColum = ["Customer ID","Name", "Adress", "Phone", "Username", "Password", "Payment Type", "Membership Type"]
+        customerIDs = ["customerid", "personName", "adress", "phone", "username", "password", "paymentid","membershipid"]
+        print(customerSQL)
+        customerData = databaseExtract(customerSQL)
+        table = "<input type=\"hidden\" value="+str(customerData[0][0])+" name=\""+str(customerIDs[0])+"\" />"
+        print(customerData)
+        for i in range(1, len(customerData[0])-4):
+            print(str(customerData[0][i]))
+            table = table + "<tr><td>"+str(customerColum[i])+"</td><td><input type=\"text\" value="+str(customerData[0][i])+" name="+str(customerIDs[i])+" /></td></tr>"
+
+        paymentSQL = """SELECT * FROM PaymentType"""
+        paymentType = databaseExtract(paymentSQL)
+        payment = "<option value="+str(customerData[0][8])+" selected=\"selected\">"+customerData[0][6]+"</option>"
+        for i in range(0, len(paymentType)):
+            pay = paymentType[i][1]
+            payment = payment + "<option value='"+str(paymentType[i][0])+"'>"+pay+"</option>"
+        membershipSQL = """SELECT * FROM Membership"""
+        membershipType = databaseExtract(membershipSQL)
+        membership = "<option value="+str(customerData[0][9])+" selected=\"selected\">"+customerData[0][7]+"</option>"
+        for i in range(0, len(membershipType)):
+            member = membershipType[i][1]
+            membership = membership + "<option value='"+str(membershipType[i][0])+"'>"+member+"</option>"
+        table = table +"""<select name="paymentid">"""+payment+"""</select><br/>   
+                        <select name="membershipid">"""+membership+"""</select><br/>"""
+        return """<html>
+                """,head,"""
+                  <body>
+                    <div>Welcome to Expresso House</div>
+                    <br /> 
+                    <form method="get" action="customerUpdated">
+                      <fieldset>
+                        <legend>Update customer</legend>
+                        <table>
+                            """+table+"""     
+                        </table>  
+                      <button type="submit">Update customer record!</button>
+                      </fieldset>
+                    </form>
+                    <br /> 
+                  </body>"""+bottom+"""
+                </html>"""
+
+    @expose()
+    def customerUpdated(self,customerid, personName, adress, phone, username, password, paymentid,membershipid):
+        updateSQL="""UPDATE Customer SET Name=\""""+personName+"""\", Adress=\""""+adress+"""\", Phone="""+phone+""", Username=\""""+username+"""\", Password=\""""+password+"""\",PaymentTypeID="""+paymentid+""", MembershipID="""+membershipid+""" WHERE Customerid="""+customerid+""""""
+        print(updateSQL)
+        databaseInsert(updateSQL)
+        return """<html>
+                """, head, """
+                  <body>
+                  <div>Customer record updated.</div> 
+                     <form method="get" action="showCustomer">
+                        <input type="hidden" value="""+customerid+""" name="Customerid" />
+                        <button type="submit">Go back to customer record.</button>
+                    </form>"""+bottom+"""
+                  </body>
+                </html>"""
 
     @expose()
     def deleteCustomer(self,CustomerID):
@@ -222,7 +280,7 @@ class ExpressoHouse():
                      <form method="get" action="showCustomer">
                         <input type="hidden" value="""+personID+""" name="Customerid" />
                         <button type="submit">No, keep record.</button>
-                    </form>
+                    </form>"""+bottom+"""
                   </body>
                 </html>"""
 
@@ -341,7 +399,11 @@ class ExpressoHouse():
                             <th>Membership Type</th>
                           </tr>
                         """ + table + """
-                        </table>                                        
+                        </table> 
+                        <form method="get" action="searchCustomers">
+                      <button type="submit">Search customers!</button>
+                    </form>
+                    <br />                                        
                       </body>""" + bottom + """
                     </html>"""
 

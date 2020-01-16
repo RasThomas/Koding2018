@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PythonCafe - Home</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/signup.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 style="text-align: center">Youtube music list</h2>
+        <form id="home" method="post" action="/home/">
+            <input type="submit" name="action" value="Search Musict" class="btn btn-lg btn-primary btn-block">
+            <input type="submit" name="action" value="List Music - Json" class="btn btn-lg btn-primary btn-block">
+            <input type="submit" name="action" value="List Music - Database" class="btn btn-lg btn-primary btn-block">
+        </form>
+        <form id="getStuff" method="post" action="/home/">
+             <input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block">
+        </form>
+    </div>
+
+
+    <footer class="footer">
+        <p>&copy; List Music @ RasTom</p>
+    </footer>
+
+</div>
+</body>
+</html>

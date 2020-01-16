@@ -8,11 +8,11 @@ def maxInAList(myList):
     for i in range (0, len(myList)):
         if maxNumber < myList[i]:
             maxNumber = myList[i]
-            print("Max number is now ", maxNumber)
+#            print("Max number is now ", maxNumber)
     return maxNumber
 
 
-maxInAList(testList)
+print(maxInAList(testList))
 
 def longestWord(myList):
     longestWord = ""
@@ -49,22 +49,22 @@ def countWOrds(fileName):
     wordList = []
     with open(fileName, mode = 'r') as myDateFile:
         wordList = myDateFile.read().split()
-        print(wordList)
+#        print(wordList)
     countedWords = [[wordList[0].upper().replace(',', '').replace('.', ''),0]]
-    print(countedWords)
+#    print(countedWords)
     for i in range (0, len(wordList)):
         found = False
         for j in range (0, len(countedWords)):
             if (wordList[i].upper() == countedWords[j][0]):
                 counted = countedWords[j][1] +1
                 countedWords[j][1] = counted
-                print(countedWords[j][0], "been found ",counted, "times.")
+#                print(countedWords[j][0], "been found ",counted, "times.")
                 found = True
                 break
         if(found != True):
             newWord = wordList[i].upper().replace(',', '')
             countedWords.append([newWord, 1])
-            print("New word ", newWord)
+#            print("New word ", newWord)
 
 
     print(sorted(countedWords, key=operator.itemgetter(1), reverse=True))

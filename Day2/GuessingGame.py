@@ -27,7 +27,7 @@ while (tries < maxTries):
         theNumbeGuessed = int(input("Guess again!"))
     elif(theNumbeGuessed == myRandomNumber):
         print("Correct!")
-        #break(0)
+        break
 else:
     print("Out of attemts!")
 

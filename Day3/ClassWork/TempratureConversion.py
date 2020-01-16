@@ -44,11 +44,12 @@ def isInt(test):
 def turtleSqare(temp):
     myTurtle = turtle.Turtle()
     sides = 4
+    print(sides)
     while(sides > 0):
         myTurtle.forward(temp*10)
         myTurtle.right(90)
         sides = sides - 1
-    turtle.done()
+    turtle.exitonclick()
 
 
 

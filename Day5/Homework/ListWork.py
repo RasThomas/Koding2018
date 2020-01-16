@@ -9,6 +9,7 @@ for i in range(0, len(testList)):
         largestNumber = testList[i]
 
 print(largestNumber)
+print(max(testList))
 
 #sum of the numbers in the list
 totalList = 0
@@ -17,6 +18,7 @@ for i in range(0, len(testList)):
     totalList = totalList + testList[i]
 
 print(totalList)
+print(sum(testList))
 
 #multiply every number in the list
 multiList = 1
@@ -25,6 +27,7 @@ for i in range(0, len(testList)):
     multiList = multiList * testList[i]
 
 print(multiList)
+
 
 #printing every third item in list
 thirdList = []

@@ -41,11 +41,13 @@ seeIfItemExists("Ajax")
 def checkPassword(userName):
     data = readMyDataFile("UserCredentials.txt")
     print(data)
+    userFound = False
     for user in data:
         userCred = user.split(';')
-        print(userCred[0])
+#        print(userCred[0])
         if(userCred[0] == userName):
             print("User found.")
+            userFound = True
             print("Type password for", userName)
             userPass = input()
             if(userPass == userCred[1]):
@@ -53,8 +55,10 @@ def checkPassword(userName):
                 break
             else:
                 print("Password is incorrect")
-        else:
-            print("User not found.")
+    if(userFound == False):
+        print("User not found")
 
 
 checkPassword("Dinesh")
+
+checkPassword(input("Type user name: "))

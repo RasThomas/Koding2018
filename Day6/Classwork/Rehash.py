@@ -9,7 +9,7 @@ while myNumber > 0:
 
 print("Sum of Didigts is", sumOfDigits)
 
-myList = [1,2,["a","b","c"],5.0,-6.0]
+myList = [1,2,["a","b","c*"],5.0,-6.0]
 
 def listing(testList):
     for i in range(0, len(testList)):

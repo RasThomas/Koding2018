@@ -3,52 +3,71 @@ import cherrypy
 import json
 from cherrypy import expose
 
-DB_NAME = "youtube.db"
-
-
 def readMyDataFile(dataFile):
-  with open(dataFile, mode='r') as myDataFile:
-    data = json.load(dataFile)
+  with open(dataFile, encoding="utf8", mode='r') as myDataFile:
+    data = json.load(myDataFile)
     return data
 
+def musicList(jsonList):
+  listP = []
+  for p in jsonList:
+    id = (p['snippet']['position'],p['snippet']['title'],p['snippet']['description'],p['contentDetails']['videoId'])
+#    print(id)
+    global maxId
+    if(p['snippet']['position'] > maxId):
+      maxId = int(p['snippet']['position'])
+    listP.append(id)
+  return listP
 
-def writeMyDataFile(fileData, fileName):
-  with open(fileName, mode='w') as myDataFile:
-    for club in fileData:
-      myDataFile.write(club + '\n')
-    print(fileData)
+def totalNumber(list):
+  missingList = []
+  p = 0
+  while p < maxId[0]:
+    missingList.append(p)
+    p = p +1
+  return missingList
+
+def idList(fullList):
+  idList = []
+  for x in fullList:
+    idList.append(x[0])
+  return idList
+
+data = readMyDataFile("Music.json")
+
+videoList = []
+
+maxId = 0
+
+videoList = musicList(data)
+
+maxId = max(videoList)
 
 
-def insertDataIntoTable(dbName, item, sql):
-  with sqlite3.connect(dbName) as db:
-    cursor = db.cursor()
-    cursor.execute(sql, item)
-    db.commit()
+idList = idList(videoList)
 
+missingList = totalNumber(data)
 
-def readTableItems(dbName, sql):
-  with sqlite3.connect(dbName) as db:
-    cursor = db.cursor()
-    # sql = 'SELECT * FROM Music'
-    cursor.execute(sql)
-    items = cursor.fetchall()
-    print(items)
-    db.commit()
-    return items
+missingNumbers = list(set(missingList)-set(idList))
 
+missingNumbers.sort()
 
-def updateTable(createSQL, dataBase):
-  with sqlite3.connect(dataBase) as myDatabase:
-    cursor = myDatabase.cursor()
-    cursor.execute(createSQL)
-    myDatabase.commit()
-    pass
+print(missingNumbers)
 
 class PythonCafe:
 
     @expose
     def index(self):
         return open('HomePage.html')
+
+    @expose
+    def home(self, action):
+        if action == 'Get Music':
+          stringTest = ""
+          stringTest = stringTest + "Test "+ "</br>"
+          for i in range(len(videoList)):
+              stringTest = stringTest +  "<a href=\"https://www.youtube.com/watch?v="+str(videoList[i][3])+"\">"+str(videoList[i][1])+"</a>" + "</br>"
+          return stringTest;
 
 
 

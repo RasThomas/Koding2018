@@ -6,30 +6,114 @@
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/signup.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 15%;
+  min-height: 300px;
+  background: #ccc;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 85%;
+  background-color: #f1f1f1;
+  min-height: 300px;
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+input {
+
+  padding: 14px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 8%;
+  width: 200px;
+
+
+}
+
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
 
 </head>
 
 <body>
 
-<div class="container">
-    <div class="jumbotron">
-        <h2 style="text-align: center">Youtube music list</h2>
+<header>
+  <h2>Youtube Music List</h2>
+</header>
+<section>
+    <nav>
+        <ul>
+        <h2>Options</h2>
         <form id="home" method="post" action="/home/">
-            <input type="submit" name="action" value="Search Musict" class="btn btn-lg btn-primary btn-block">
-            <input type="submit" name="action" value="List Music - Json" class="btn btn-lg btn-primary btn-block">
-            <input type="submit" name="action" value="List Music - Database" class="btn btn-lg btn-primary btn-block">
+            <li><input type="submit" name="action" value="Search Music" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input id=listMusic type="submit" name="action" value="List Music - Json" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input type="submit" name="action" value="List Music - Database" class="btn btn-lg btn-primary btn-block"></li>
         </form>
         <form id="getStuff" method="post" action="/home/">
-             <input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block">
+             <li><input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block"></li>
         </form>
-    </div>
+        </ul>
+    </nav>
 
+<article>
+</article>
+
+</section>
 
     <footer class="footer">
         <p>&copy; List Music @ RasTom</p>
     </footer>
-
-</div>
 </body>
 </html>

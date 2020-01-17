@@ -41,6 +41,13 @@ maxId = 0
 
 videoList = musicList(data)
 
+def sortSecond(val):
+    return val[1]
+
+titleList = videoList
+
+titleList.sort(key = sortSecond)
+
 maxId = max(videoList)
 
 
@@ -61,12 +68,22 @@ class PythonCafe:
         return open('HomePage.html')
 
     @expose
+    def musicList(self):
+        stringTest = ""
+        stringTest = stringTest + "Test " + "</br>"
+        for i in range(len(titleList)):
+            stringTest = stringTest + "<a href=\"https://www.youtube.com/watch?v=" + str(titleList[i][3]) + "\">" + str(
+                titleList[i][1]) + "</a>" + "</br>"
+        table = stringTest;
+        return open('MusicList.html')
+
+    @expose
     def home(self, action):
         if action == 'Get Music':
           stringTest = ""
           stringTest = stringTest + "Test "+ "</br>"
-          for i in range(len(videoList)):
-              stringTest = stringTest +  "<a href=\"https://www.youtube.com/watch?v="+str(videoList[i][3])+"\">"+str(videoList[i][1])+"</a>" + "</br>"
+          for i in range(len(titleList)):
+              stringTest = stringTest +  "<a href=\"https://www.youtube.com/watch?v="+str(titleList[i][3])+"\">"+str(titleList[i][1])+"</a>" + "</br>"
           return stringTest;
 
 

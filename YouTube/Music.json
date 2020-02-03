@@ -1045,7 +1045,7 @@
       "kind" : "youtube#video",
       "videoId" : "XO05NftxXgc"
     },
-    "title" : "Private video"
+    "title" : ""
   },
   "status" : {
     "privacyStatus" : "private"

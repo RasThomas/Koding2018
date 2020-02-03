@@ -96,17 +96,10 @@ input {
     <nav>
         <ul>
         <h2>Options</h2>
-        <form id="searchBox" method="post" action="/search/"></li>
-            <li><label for="searchItem" class="sr-only">Search titles</label></li>
-            <li><input type="name" name="searchItem" id="searchItem" class="form-control" placeholder="Search"
-                   required autofocus></li>
+        <form id="home" method="post" action="/home/">
             <li><input type="submit" name="action" value="Search Music" class="btn btn-lg btn-primary btn-block"></li>
-
-        </form>
-        <form id="lists" method="post" action="/home/"></li>
-
-            <li><input id=missingNumber type="submit" name="action" value="Missing numbers" class="btn btn-lg btn-primary btn-block"></li>
-            <li><input id=privateDeleted type="submit" name="action" value="Private or deleted video" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input id=listMusic type="submit" name="action" value="List Music - Json" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input type="submit" name="action" value="List Music - Database" class="btn btn-lg btn-primary btn-block"></li>
         </form>
         <form id="getStuff" method="post" action="/home/">
              <li><input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block"></li>
@@ -115,8 +108,10 @@ input {
     </nav>
 
 <article>
-     <td>${table}</td>
+            <td>${table}</td>
 </article>
+
+
 
 </section>
 

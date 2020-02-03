@@ -2,6 +2,7 @@ import sqlite3
 import cherrypy
 import json
 from cherrypy import expose
+from mako.template import Template
 
 def readMyDataFile(dataFile):
   with open(dataFile, encoding="utf8", mode='r') as myDataFile:
@@ -33,6 +34,16 @@ def idList(fullList):
     idList.append(x[0])
   return idList
 
+def searchList(string, list):
+  hitList = []
+  searchTerm = string
+  for x in range(len(list)):
+    if searchTerm.casefold() in list[x][1].casefold():
+      hitList.append(list[x])
+      print(list[x][1])
+  return hitList
+
+
 data = readMyDataFile("Music.json")
 
 videoList = []
@@ -61,30 +72,77 @@ missingNumbers.sort()
 
 print(missingNumbers)
 
-class PythonCafe:
+stringTest = ""
+
+searchString = ""
+
+class YouTubeList:
 
     @expose
     def index(self):
-        return open('HomePage.html')
+        return Template(filename='HomePage.html').render(table="")
 
     @expose
-    def musicList(self):
-        stringTest = ""
+    def musicSearch(self,inputName):
+        stringTest = inputName
         stringTest = stringTest + "Test " + "</br>"
         for i in range(len(titleList)):
             stringTest = stringTest + "<a href=\"https://www.youtube.com/watch?v=" + str(titleList[i][3]) + "\">" + str(
                 titleList[i][1]) + "</a>" + "</br>"
         table = stringTest;
-        return open('MusicList.html')
+        print("MuslicList")
+        return Template(filename='HomePage.html').render(table=table)
+
+
+
+    @expose
+    def search(self, action, searchItem):
+
+        if action == 'Search Music':
+            if len(searchItem) < 3:
+                table = "Search must have 3 characters."
+            else:
+                hitList = searchList(searchItem, videoList)
+                searchString = ""
+                searchString = searchString + "Search " + "</br>"
+                for i in range(len(hitList)):
+                    searchString = searchString + "<a href=\"https://www.youtube.com/watch?v=" + str(hitList[i][3]) + "\">" + str(
+                        hitList[i][1]) + "</a>" + "</br>"
+                table = searchString;
+                print("MuslicList")
+            return Template(filename='HomePage.html').render(table=table)
 
     @expose
     def home(self, action):
         if action == 'Get Music':
-          stringTest = ""
-          stringTest = stringTest + "Test "+ "</br>"
-          for i in range(len(titleList)):
-              stringTest = stringTest +  "<a href=\"https://www.youtube.com/watch?v="+str(titleList[i][3])+"\">"+str(titleList[i][1])+"</a>" + "</br>"
-          return stringTest;
+            print("Get Music")
+            musicString = ""
+            musicString = musicString + "Videoliste "+ "</br>"
+            for i in range(len(titleList)):
+                musicString = musicString +  "<a href=\"https://www.youtube.com/watch?v="+str(titleList[i][3])+"\">"+str(titleList[i][1])+"</a>" + "</br>"
+            return Template(filename='HomePage.html').render(table=musicString)
+        if action == 'Missing numbers':
+            print("Missing numbers")
+            missingMusic = ""
+            missingMusic = missingMusic + "Numbers missing in youtube list "+ "</br>"
+            print(missingNumbers)
+            print(missingNumbers[1])
+            for i in range(len(missingNumbers)):
+                missingMusic = missingMusic + str(missingNumbers[i])+ "</br>"
+            return Template(filename='HomePage.html').render(table=missingMusic)
+        if action == 'Private or deleted video':
+            print("Private or deleted video")
+            searchString = ""
+            fullList = []
+            privateList = searchList("Private video", videoList)
+            deletedList = searchList("Deleted video", videoList)
+            fullList = privateList + deletedList
+            for i in range(len(fullList)):
+                searchString = searchString + "<a href=\"https://www.youtube.com/watch?v=" + str(fullList[i][3]) + "\">" + str(
+                    fullList[i][1]) + "</a>" + "</br>"
+            table = searchString;
+            print("MuslicList")
+            return Template(filename='HomePage.html').render(table=table)
 
 
 
@@ -92,4 +150,4 @@ class PythonCafe:
 
 
 
-cherrypy.quickstart(PythonCafe())
+cherrypy.quickstart(YouTubeList())

@@ -75,6 +75,16 @@ def idList(fullList):
     idList.append(x[0])
   return idList
 
+def searchList(string, list):
+  hitList = []
+  searchTerm = string
+  for x in range(len(list)):
+    if searchTerm.casefold() in list[x][2].casefold():
+      hitList.append(list[x][2])
+      print(list[x][2])
+  return hitList
+
+
 data = readMyDataFile("Music.json")
 
 
@@ -94,7 +104,7 @@ missingNumbers.sort()
 
 print(missingNumbers)
 
-
+searchList("Scott", videoList)
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>PythonCafe - Home</title>
+    <title>YouTube Music List - Home</title>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
@@ -16,10 +16,16 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+#info1 {
+  overflow: hidden;
+  background-color: yellow;
+}
 
 /* Style the header */
 header {
-  background-color: #666;
+  background-color: #ADD8E6;
+  border-bottom-style: solid;
+  border-bottom-color: #0000A0;
   padding: 30px;
   text-align: center;
   font-size: 35px;
@@ -30,7 +36,7 @@ header {
 nav {
   float: left;
   width: 15%;
-  min-height: 300px;
+  min-height: 400px;
   background: #ccc;
 }
 
@@ -45,7 +51,13 @@ article {
   padding: 20px;
   width: 85%;
   background-color: #f1f1f1;
-  min-height: 300px;
+  min-height: 400px;
+  border-left-style: solid;
+  border-left-color: #000000;
+}
+
+table, th, td {
+  border: 1px solid black;
 }
 
 /* Clear floats after the columns */
@@ -90,12 +102,12 @@ input {
 <body>
 
 <header>
-  <h2>Youtube Music List</h2>
+  <a href="/index"><h2>Youtube Music List</h2></a>
 </header>
 <section>
     <nav>
         <ul>
-        <h2>Options</h2>
+        <h2>Options:</h2>
         <form id="searchBox" method="post" action="/search/"></li>
             <li><label for="searchItem" class="sr-only">Search titles</label></li>
             <li><input type="name" name="searchItem" id="searchItem" class="form-control" placeholder="Search"
@@ -109,7 +121,8 @@ input {
             <li><input id=privateDeleted type="submit" name="action" value="Private or deleted video" class="btn btn-lg btn-primary btn-block"></li>
         </form>
         <form id="getStuff" method="post" action="/home/">
-             <li><input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input type="submit" name="action" value="Get Music" class="btn btn-lg btn-primary btn-block"></li>
+            <li><input type="submit" name="action" value="Get Music And Info" class="btn btn-lg btn-primary btn-block"></li>
         </form>
         </ul>
     </nav>
